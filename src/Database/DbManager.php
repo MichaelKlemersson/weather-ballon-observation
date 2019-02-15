@@ -8,7 +8,8 @@ class DbManager
 {
     protected $dbAdapter;
 
-    private static $INSERT_QUERY = 'INSERT INTO weather_metrics VALUES :date, :location, :temperature, :observatory, :distance';
+    private static $INSERT_QUERY = 'INSERT INTO weather_metrics(`date`, `location`, `temperature`, `observatory`, `distance`) VALUES'
+        . ' (:date, :location, :temperature, :observatory, :distance)';
 
     public function __construct(PDO $dbAdapter)
     {
@@ -25,7 +26,7 @@ class DbManager
     }
 
     public function insert(
-        \DateTime $date,
+        string $date,
         string $location,
         int $temperature,
         string $observatory,
