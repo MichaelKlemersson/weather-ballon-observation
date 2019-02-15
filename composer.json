@@ -14,7 +14,7 @@
             "WbApp\\": "src/",
             "Test\\WbApp\\": "test/"
         },
-        "classmap": ["test/Unit/BaseTestCase.php"]
+        "classmap": ["test/"]
     },
     "scripts": {
         "test": "phpunit -c test/phpunit.xml",
