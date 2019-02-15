@@ -3,11 +3,13 @@
 namespace Test\WbApp\Unit;
 
 use SplFileObject;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Tester\CommandTester;
+use Symfony\Component\Console\Application;
 use WbApp\Command\WeatherBallonDataGeneratorCommand;
 use WbApp\WeatherDataFaker;
 
-class WeatherBallonDataGeneratorCommandTest extends BaseTestCase
+class WeatherBallonDataGeneratorCommandTest extends TestCase
 {
     private $testFile = __DIR__ . '/../../storage/files/weather-test-data.txt';
 
@@ -16,9 +18,10 @@ class WeatherBallonDataGeneratorCommandTest extends BaseTestCase
         // prepare
         $numberOfLines = 1;
         $classUnderTest = new WeatherBallonDataGeneratorCommand($this->testFile, new WeatherDataFaker());
-        $this->application->add($classUnderTest);
+        $application = new Application();
+        $application->add($classUnderTest);
 
-        $command = $this->application->find('app:generate-data');
+        $command = $application->find('app:generate-data');
         $commandTester = new CommandTester($command);
 
         // test

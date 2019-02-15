@@ -3,12 +3,14 @@
 namespace Test\WbApp\Unit;
 
 use Prophecy\Argument;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Tester\CommandTester;
+use Symfony\Component\Console\Application;
 use WbApp\Database\DbManager;
 use WbApp\Command\ImportCommand;
 use WbApp\WeatherDataFaker;
 
-class ImportCommandTest extends BaseTestCase
+class ImportCommandTest extends TestCase
 {
     private $testFile = __DIR__ . '/../../storage/files/weather-test-data.txt';
 
@@ -18,6 +20,7 @@ class ImportCommandTest extends BaseTestCase
         $dataGenerator = new WeatherDataFaker();
         touch($this->testFile);
         file_put_contents($this->testFile, $dataGenerator->generate() . PHP_EOL);
+        $application = new Application();
 
         // mocks
         $dbManagerMock = $this->getMockBuilder(DbManager::class)->disableOriginalConstructor()->getMock();
@@ -27,9 +30,9 @@ class ImportCommandTest extends BaseTestCase
         $dbManagerMock->expects($this->once())->method('commit');
 
         $classUnderTest = new ImportCommand($dbManagerMock);
-        $this->application->add($classUnderTest);
+        $application->add($classUnderTest);
 
-        $command = $this->application->find('app:import-data');
+        $command = $application->find('app:import-data');
         $commandTester = new CommandTester($command);
 
         // test
