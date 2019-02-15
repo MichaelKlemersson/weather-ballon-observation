@@ -19,6 +19,18 @@ class WeatherDataFaker
             'unit' => self::TEMPERATURE_UNIT_KELVIN,
             'distance' => self::DISTANCE_TYPE_METERS
         ],
+        'BR' => [
+            'unit' => self::TEMPERATURE_UNIT_CELSIUS,
+            'distance' => self::DISTANCE_TYPE_METERS
+        ],
+        'JP' => [
+            'unit' => self::TEMPERATURE_UNIT_FAHRENHEIT,
+            'distance' => self::DISTANCE_TYPE_METERS
+        ],
+        'GER' => [
+            'unit' => self::TEMPERATURE_UNIT_CELSIUS,
+            'distance' => self::DISTANCE_TYPE_MILES
+        ],
         'Others' => [
             'unit' => self::TEMPERATURE_UNIT_KELVIN,
             'distance' => self::DISTANCE_TYPE_KILOMETERS
@@ -30,8 +42,8 @@ class WeatherDataFaker
     const TEMPERATURE_UNIT_KELVIN = 'kelvin';
     
     const DISTANCE_TYPE_KILOMETERS = 'km';
-    const DISTANCE_TYPE_MILES = 'km';
-    const DISTANCE_TYPE_METERS = 'km';
+    const DISTANCE_TYPE_MILES = 'miles';
+    const DISTANCE_TYPE_METERS = 'm';
 
     const DATE_FORMAT = 'Y-m-d\TH:i';
     const DATA_SEPARATOR = '|';
