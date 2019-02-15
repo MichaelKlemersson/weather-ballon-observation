@@ -30,9 +30,12 @@ class InitDatabaseCommand extends Command
             observatory TEXT NOT NULL,
             `location` TEXT NOT NULL,
             temperature INTEGER NOT NULL DEFAULT 0,
-            distance REAL NOT NULL DEFAULT 0
+            temperature_unit TEXT NOT NULL,
+            distance REAL NOT NULL DEFAULT 0,
+            distance_unit REAL NOT NULL DEFAULT 0
         );
-        CREATE INDEX IF NOT EXISTS idx_statistics ON weather_metrics(temperature, distance);
+        CREATE INDEX IF NOT EXISTS idx_filter ON weather_metrics(temperature_unit, distance_unit);
+        CREATE INDEX IF NOT EXISTS idx_statistics ON weather_metrics(temperature, distance, observatory);
 SQL
         );
 
