@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/MichaelKlemersson/weather-ballon-observation.svg?branch=master)](https://travis-ci.com/MichaelKlemersson/weather-ballon-observation)
+
 # Weather Observations
 This is a small project for a challenge test
 
