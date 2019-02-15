@@ -13,7 +13,8 @@
         "psr-4": {
             "WbApp\\": "src/",
             "Test\\WbApp\\": "test/"
-        }
+        },
+        "classmap": ["test/Unit/BaseTestCase.php"]
     },
     "scripts": {
         "test": "phpunit -c test/phpunit.xml",
