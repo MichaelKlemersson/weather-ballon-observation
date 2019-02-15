@@ -34,14 +34,16 @@ class WeatherBallonDataGeneratorCommand extends Command
     {
         $this->log("Creating file");
 
-        $linesToGenerate = intval($input->getFirstArgument());
+        $linesToGenerate = intval($input->getArgument('lines'));
 
         $file = fopen($this->filePath, 'w+');
 
-        $this->log("Writing data...");
-
         for ($i = 0; $i < $linesToGenerate; $i++) {
-            fwrite($file, $this->weatherDataFaker->generate() . PHP_EOL);
+            $data = $this->weatherDataFaker->generate();
+
+            $this->log("Writing data: {$data}");
+            
+            fwrite($file, $data . PHP_EOL);
         }
 
         fclose($file);

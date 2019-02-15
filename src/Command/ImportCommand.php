@@ -35,26 +35,42 @@ class ImportCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output): void
     {
-        $file = new SplFileObject($input->getFirstArgument());
+        $file = new SplFileObject($input->getArgument('file'));
         $file->setFlags(SplFileObject::READ_AHEAD);
 
+        $this->dbManager->beginTransaction();
+        $start_time = microtime(TRUE);
+
+        
         while (!$file->eof()) {
             $data = $file->current();
 
             list($date, $location, $temperature, $observatory) = FileDataParser::parse($data);
-
+            
             $distance = Math::getDistanceBetweenTwoPoints([0, 0], explode(',', $location));
-
+            
             $this->log("Inserting data: {$data}");
-
-            $this->dbManager->insert($date, $location, $temperature, $observatory, $distance);
-
+            
+            $this->dbManager->insert(
+                $date->format(WeatherDataFaker::DATE_FORMAT),
+                $location,
+                $temperature,
+                $observatory,
+                $distance
+            );
+            
             $file->next();
         }
         
+        $this->dbManager->commit();
+
+        $end_time = microtime(TRUE);
+        
+        $this->log("Time: " . ($end_time - $start_time));
+        $this->log("Memory peak: " . memory_get_peak_usage(true));
         unset($file);
     }
-
+    
     private function log($message)
     {
         echo PHP_EOL . $message . PHP_EOL;
