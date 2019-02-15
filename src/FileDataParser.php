@@ -9,7 +9,7 @@ class FileDataParser
 {
     public static function parse(string $data): array
     {
-        $splittedData = explode(WeatherDataFaker::DATA_SEPARATOR, $data);
+        $splittedData = explode(WeatherDataFaker::DATA_SEPARATOR, str_replace(PHP_EOL, '', trim($data)));
         $date = new DateTime($splittedData[0]);
         $location = $splittedData[1];
         $temperature = (int) $splittedData[2];
