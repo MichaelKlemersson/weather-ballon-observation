@@ -9,7 +9,8 @@
     stopOnFailure="true"
     stopOnIncomplete="false"
     stopOnSkipped="false"
-    stopOnRisky="false">
+    stopOnRisky="false"
+    bootstrap="vendor/autoload.php">
     <testsuite name="all">
         <directory>Unit/</directory>
     </testsuite>

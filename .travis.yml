@@ -1,7 +1,10 @@
 language: php
+
 php:
   - '7.2'
 
-install: true
+before_script:
+  - composer self-update
+  - composer install --prefer-source --no-interaction --dev
 
-script: phpunit --configuration test/phpunit.xml --coverage-text
+script: phpunit --configuration test/phpunit.xml --coverage-clover=coverage.xml

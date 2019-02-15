@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\WbApp\Unit;
+namespace Test\Unit;
 
 use PHPUnit\Framework\TestCase;
 use WbApp\WeatherDataFaker;

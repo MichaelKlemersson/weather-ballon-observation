@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\WbApp\Unit;
+namespace Test\Unit;
 
 use SplFileObject;
 use PHPUnit\Framework\TestCase;
