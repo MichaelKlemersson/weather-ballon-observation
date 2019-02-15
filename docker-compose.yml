@@ -1,0 +1,8 @@
+version: '3.0'
+
+services:
+  app:
+    container_name: weather-app
+    image: ambientum/php:7.2-nginx
+    volumes:
+      - .:/var/www/app

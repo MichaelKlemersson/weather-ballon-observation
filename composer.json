@@ -12,11 +12,11 @@
     "autoload": {
         "psr-4": {
             "WbApp\\": "src/",
-            "Test\\WbApp\\": "test/"
+            "Test\\": "test/"
         }
     },
     "scripts": {
-        "test": "phpunit -c test/phpunit.xml",
-        "test-dox": "phpunit -c test/phpunit.xml --testdox"
+        "test": "phpunit -c phpunit.xml",
+        "test-dox": "phpunit -c phpunit.xml --testdox"
     }
 }

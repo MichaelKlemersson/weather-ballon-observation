@@ -1,47 +1,42 @@
 <?php
 
-namespace Test\WbApp\Unit;
+namespace Test\Unit;
 
-use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
-use Symfony\Component\Console\Output\NullOutput;
-use Symfony\Component\Console\Input\ArrayInput;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\Console\Tester\CommandTester;
+use Symfony\Component\Console\Application;
 use WbApp\Database\DbManager;
 use WbApp\Command\ImportCommand;
+use WbApp\WeatherDataFaker;
 
 class ImportCommandTest extends TestCase
 {
-    private $testFile = __DIR__ . '/../../storage/database/weather-test-db.sqlite';
+    private $testFile = __DIR__ . '/../../storage/files/weather-test-data.txt';
 
     public function testImportDataToDataBase(): void
     {
         // prepare
-        $file = __DIR__ . '/../../weather-test-data.txt';
-        $dbManagerMock = $this->prophesize(DbManager::class);
-        
-        $dbManagerMock->insert(
-            Argument::type(\DateTime::class),
-            Argument::type('string'),
-            Argument::type('int'),
-            Argument::type('string'),
-            Argument::type('float')
-        )->willReturn(1);
+        $dataGenerator = new WeatherDataFaker();
+        touch($this->testFile);
+        file_put_contents($this->testFile, $dataGenerator->generate() . PHP_EOL);
+        $application = new Application();
 
-        $classUnderTest = new ImportCommand($dbManagerMock->reveal());
-        $input = new ArrayInput(['file' => $file]);
-        $output = new NullOutput();
-
-        // test
-        $classUnderTest->execute($input, $output);
+        // mocks
+        $dbManagerMock = $this->getMockBuilder(DbManager::class)->disableOriginalConstructor()->getMock();
 
         // assert
-        $dbManagerMock->insert(
-            Argument::type(\DateTime::class),
-            Argument::type('string'),
-            Argument::type('int'),
-            Argument::type('string'),
-            Argument::type('float')
-        )->shouldHaveBeenCalled();
+        $dbManagerMock->expects($this->once())->method('beginTransaction');
+        $dbManagerMock->expects($this->once())->method('commit');
+
+        $classUnderTest = new ImportCommand($dbManagerMock);
+        $application->add($classUnderTest);
+
+        $command = $application->find('app:import-data');
+        $commandTester = new CommandTester($command);
+
+        // test
+        $commandTester->execute(['file' => $this->testFile]);
     }
 
     public function setUp(): void
