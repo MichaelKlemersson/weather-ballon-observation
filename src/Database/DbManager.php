@@ -99,4 +99,14 @@ SQL_FILTER;
 
         return $result;
     }
+
+    public function beginTransaction(): void
+    {
+        $this->dbAdapter->beginTransaction();
+    }
+
+    public function commit(): void
+    {
+        $this->dbAdapter->commit();
+    }
 }
