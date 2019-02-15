@@ -11,7 +11,7 @@ use WbApp\WeatherDataFaker;
 
 class WeatherBallonDataGeneratorCommandTest extends TestCase
 {
-    protected $testFile = __DIR__ . '/../../storage/files/weather-test-data.txt';
+    private $testFile = __DIR__ . '/../../storage/files/weather-test-data.txt';
 
     public function testCanGenerateWeatherData(): void
     {
