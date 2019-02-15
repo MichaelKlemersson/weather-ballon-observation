@@ -57,3 +57,6 @@ php index.php app:statistics
 # Retrieving observations
 php index.php app:observations
 ```
+
+## Road map
+- [] Add tests for not reliable data
