@@ -54,9 +54,9 @@ class ImportCommand extends Command
             $this->dbManager->insert(
                 $date->format(WeatherDataFaker::DATE_FORMAT),
                 $location,
-                $temperature,
+                [$temperature, WeatherDataFaker::OBSERVATORIES[$observatory]['unit']],
                 $observatory,
-                $distance
+                [$distance, WeatherDataFaker::OBSERVATORIES[$observatory]['distance']]
             );
             
             $file->next();
