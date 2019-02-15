@@ -24,7 +24,7 @@ composer test
 # Initing the database
 php index.php app:init-db
 
-# Generating dummy data
+# Generating dummy data, this data will be stored in storage/files/ folder
 php index.php app:generate-data
 
 # Importing data
@@ -39,13 +39,16 @@ php index.php app:observations
 
 ### Docker
 ```bash
-# Entering into the container
+# Start the container
+docker-compose up -d
+
+# Entering inside the container
 docker container exec -it weather-app bash
 
 # Initing the database
 php index.php app:init-db
 
-# Generating dummy data
+# Generating dummy data, this data will be stored in storage/files/ folder
 php index.php app:generate-data
 
 # Importing data
@@ -57,3 +60,6 @@ php index.php app:statistics
 # Retrieving observations
 php index.php app:observations
 ```
+
+## Road map
+- [] Add tests for not reliable data
