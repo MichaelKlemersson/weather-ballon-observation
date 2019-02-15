@@ -6,6 +6,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
+use WbApp\WeatherDataFaker;
 
 class WeatherBallonDataGeneratorCommand extends Command
 {
@@ -31,18 +32,27 @@ class WeatherBallonDataGeneratorCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output): void
     {
-        $this->createEmptyFile($this->filePath);
+        $this->log("Creating file");
 
         $linesToGenerate = intval($input->getArgument('lines'));
+
+        $file = fopen($this->filePath, 'w+');
+
+        for ($i = 0; $i < $linesToGenerate; $i++) {
+            $data = $this->weatherDataFaker->generate();
+
+            $this->log("Writing data: {$data}");
+            
+            fwrite($file, $data . PHP_EOL);
+        }
+
+        fclose($file);
+
+        $this->log("Finished");
     }
 
-    private function createEmptyFile(): void
+    private function log($message)
     {
-
-    }
-
-    private function getRandomData()
-    {
-
+        echo PHP_EOL . $message . PHP_EOL;
     }
 }

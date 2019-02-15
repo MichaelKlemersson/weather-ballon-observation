@@ -7,16 +7,17 @@ use SplFileObject;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Input\ArrayInput;
 use WbApp\Command\WeatherBallonDataGeneratorCommand;
+use WbApp\WeatherDataFaker;
 
-class GenerateDataCommandTest extends TestCase
+class WeatherBallonDataGeneratorCommandTest extends TestCase
 {
-    protected $testFile = __DIR__ . '/../../storage/files/weather-test-data.txt';
+    private $testFile = __DIR__ . '/../../storage/files/weather-test-data.txt';
 
     public function testCanGenerateWeatherData(): void
     {
         // prepare
         $numberOfLines = 1;
-        $command = new WeatherBallonDataGeneratorCommand($this->testFile);
+        $command = new WeatherBallonDataGeneratorCommand($this->testFile, new WeatherDataFaker());
         $input = new ArrayInput(['lines' => $numberOfLines]);
         $output = new NullOutput();
 
@@ -37,16 +38,25 @@ class GenerateDataCommandTest extends TestCase
 
         $path = realpath($this->testFile);
 
-        var_dump($path);
-
         $file = new SplFileObject($this->testFile, 'r');
         $file->seek($limitOfLines);
 
-        return $file->key() + 1;
+        return $file->key();
+    }
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        if (file_exists($this->testFile)) {
+            unlink($this->testFile);
+        }
     }
 
     public function tearDown(): void
     {
+        parent::setUp();
+        
         if (file_exists($this->testFile)) {
             unlink($this->testFile);
         }
