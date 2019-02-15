@@ -9,6 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\Table;
 use WbApp\Database\DbManager;
 use WbApp\Math;
+use WbApp\WeatherDataFaker;
 
 class GetObservationsCommand extends Command
 {
@@ -34,6 +35,9 @@ class GetObservationsCommand extends Command
     {
         $temperatureUnit = $input->getArgument('temperature_unit');
         $point = $input->getArgument('point');
+
+        $this->validateArguments($temperatureUnit, $point);
+
         $distance = Math::getDistanceBetweenTwoPoints([0, 0], explode(',', $point));
 
         $data = $this->dbManager->getObservations($temperatureUnit, $distance);
@@ -45,5 +49,24 @@ class GetObservationsCommand extends Command
         
 
         $table->render();
+    }
+
+    private function validateArguments(string $temperatureUnit, string $point)
+    {
+        $units = [
+            WeatherDataFaker::TEMPERATURE_UNIT_CELSIUS,
+            WeatherDataFaker::TEMPERATURE_UNIT_KELVIN,
+            WeatherDataFaker::TEMPERATURE_UNIT_FAHRENHEIT,
+        ];
+
+        $point = explode(',', preg_replace(['/\s+/'], '', $point));
+
+        $isValidPoint = count($point) === 2;
+
+        if (!in_array($temperatureUnit, $units) || !$isValidPoint) {
+            throw new \InvalidArgumentException(
+                'Unit should be [celsius, kelvin, fahrenheit] and/or point should follow the notation 0,0'
+            );
+        }
     }
 }
