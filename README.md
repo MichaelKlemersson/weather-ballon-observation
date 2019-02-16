@@ -4,9 +4,10 @@
 This is a small project for a challenge test
 
 ## Requirements
-- PHP 7.0+
+- PHP 7.2+
 - pdo_sqlite
 - composer
+- sqlite
 
 ## Testing
 ```bash
