@@ -19,7 +19,7 @@ class WeatherDataFakerTest extends TestCase
         $data = explode(WeatherDataFaker::DATA_SEPARATOR, $result);
         $dateTime = new \DateTime($data[0]);
         $location = explode(',', $data[1]);
-        $temperature = $data[2];
+        $temperature = (int) $data[2];
         $observatory = $data[3];
 
         // assert
@@ -27,7 +27,7 @@ class WeatherDataFakerTest extends TestCase
         $this->assertCount(2, $location);
         $this->assertTrue(intval($location[0]) >= 0);
         $this->assertTrue(intval($location[1]) >= 0);
-        $this->assertIsNumeric($temperature);
+        $this->assertNotNull($temperature);
         $this->assertArrayHasKey($observatory, WeatherDataFaker::OBSERVATORIES);
     }
 }
