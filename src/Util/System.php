@@ -5,7 +5,7 @@ namespace WbApp\Util;
 trait System
 {
     public function getMemoryPeak(int $precision = 2) {
-        $bytes = memory_get_peak_usage(true);
+        $bytes = memory_get_peak_usage();
 
         $units = array("b", "kb", "mb", "gb", "tb");
 
