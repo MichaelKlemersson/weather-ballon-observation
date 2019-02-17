@@ -27,7 +27,7 @@ class WeatherDataFakerTest extends TestCase
         $this->assertCount(2, $location);
         $this->assertTrue(intval($location[0]) >= 0);
         $this->assertTrue(intval($location[1]) >= 0);
-        $this->assertInternalType("int", $temperature);
+        $this->assertNotNull($temperature);
         $this->assertArrayHasKey($observatory, WeatherDataFaker::OBSERVATORIES);
     }
 }
