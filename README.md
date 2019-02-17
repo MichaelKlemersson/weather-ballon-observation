@@ -4,7 +4,7 @@
 This is a small project for a challenge test
 
 ## Requirements
-- PHP 7.2+
+- PHP 7.1+
 - pdo_sqlite
 - composer
 - sqlite
