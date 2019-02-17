@@ -7,9 +7,12 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 use WbApp\WeatherDataFaker;
+use WbApp\Util\System;
 
 class WeatherBallonDataGeneratorCommand extends Command
 {
+    use System;
+
     protected static $defaultName = 'app:generate-data';
     private $weatherDataFaker;
     private $filePath;
@@ -49,6 +52,7 @@ class WeatherBallonDataGeneratorCommand extends Command
         fclose($file);
 
         $this->log("Finished");
+        $this->log("System memory peak: " . $this->getMemoryPeak());
     }
 
     private function log($message)

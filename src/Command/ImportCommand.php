@@ -11,9 +11,12 @@ use WbApp\WeatherDataFaker;
 use WbApp\Database\DbManager;
 use WbApp\Math;
 use WbApp\FileDataParser;
+use WbApp\Util\System;
 
 class ImportCommand extends Command
 {
+    use System;
+    
     protected static $defaultName = 'app:import-data';
     private $dbManager;
     private $filePath;
@@ -40,7 +43,6 @@ class ImportCommand extends Command
 
         $this->dbManager->beginTransaction();
         $start_time = microtime(TRUE);
-
         
         while (!$file->eof()) {
             $data = $file->current();
@@ -67,7 +69,7 @@ class ImportCommand extends Command
         $end_time = microtime(TRUE);
         
         $this->log("Time: " . ($end_time - $start_time));
-        $this->log("Memory peak: " . memory_get_peak_usage(true));
+        $this->log("System memory peak: " . $this->getMemoryPeak());
         unset($file);
     }
     
