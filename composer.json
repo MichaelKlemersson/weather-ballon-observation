@@ -5,7 +5,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=7.1",
-        "pdo_sqlite": "*",
+        "ext-pdo_sqlite": "*",
         "symfony/console": "~3.4"
     },
     "require-dev": {
